@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+require 'converter'
+
+opts = Trollop::options do
+  opt :file, 'Markdown file to be converted', :short => 'f', :type => String
+end
+
+Converter.new(opts[:file]).convert_and_highlight
