@@ -3,7 +3,7 @@ module Highlighter
     class Prism
       class << self
         def prismjs
-          'https://cdn.jsdelivr.net/prism//prism.js'
+          'https://cdn.jsdelivr.net/prism/1.3.0/prism.js'
         end
 
         def themes
@@ -14,7 +14,7 @@ module Highlighter
             okaidia: 'https://cdn.jsdelivr.net/prism/1.3.0/themes/prism-okaidia.css',
             tomorrow: 'https://cdn.jsdelivr.net/prism/1.3.0/themes/prism-tomorrow.css',
             twilight: 'https://cdn.jsdelivr.net/prism/1.3.0/themes/prism-twilight.css',
-            main: 'https://cdn.jsdelivr.net/prism/1.3.0/themes/prism.css',
+            default: 'https://cdn.jsdelivr.net/prism/1.3.0/themes/prism.css',
           }
         end
 

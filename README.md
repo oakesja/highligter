@@ -8,6 +8,10 @@ plugins
 - large number of supported languages
 - reasonable number of themes
 
+- support both code blocks and spans
+- support language specifier for code spans
+
+
 ## Installation
 
 Add this line to your application's Gemfile:

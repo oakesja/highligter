@@ -6,5 +6,6 @@ module Highlighter
 
     accessor_with_default :output_path
     accessor_with_default :highlight_code, true
+    accessor_with_default :theme, :default
   end
 end

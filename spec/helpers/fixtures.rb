@@ -36,7 +36,13 @@ class Fixtures
 
       fixture 'simple'
       fixture 'normal_code'
-      fixture 'highlighted_code'
+      fixture 'highlighted_code_coy'
+      fixture 'highlighted_code_dark'
+      fixture 'highlighted_code_default'
+      fixture 'highlighted_code_funky'
+      fixture 'highlighted_code_okaidia'
+      fixture 'highlighted_code_tomorrow'
+      fixture 'highlighted_code_twilight'
     end
   end
 end

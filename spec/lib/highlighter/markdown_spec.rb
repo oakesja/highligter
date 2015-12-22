@@ -8,7 +8,7 @@ module Highlighter
       it 'converts markdown input to html' do
         verify_to_html(Fixtures::Markdown.simple, Fixtures::Html.simple)
       end
-      
+
       context 'for markdown with code blocks' do
         context 'and highlight code option is false' do
           it 'it does add highlighting to code blocks' do
@@ -17,13 +17,19 @@ module Highlighter
           end
         end
         context 'and highlight code option is true' do
-          it 'it adds highlighting to code blocks' do
-            options.highlight_code = true
-            verify_to_html(Fixtures::Markdown.code, Fixtures::Html.highlighted_code)
+          Utils::Prism.themes.each_key do |theme|
+            context "and for the #{theme} theme" do
+              it 'it adds highlighting to code blocks' do
+                options.highlight_code = true
+                options.theme = theme
+                expected_with_theme = "highlighted_code_#{theme.to_s}"
+                verify_to_html(Fixtures::Markdown.code, Fixtures::Html.send(expected_with_theme.to_sym))
+              end
+            end
           end
         end
       end
-      
+
       def verify_to_html(input_file, output_file)
         html = Markdown.new(options).to_html(read_fixture(input_file))
         expect(html).to eql read_fixture(output_file)

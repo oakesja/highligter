@@ -7,6 +7,7 @@ class PrismGenerator
   ASSET_BASE_URI = 'https://cdn.jsdelivr.net/prism'
 
   def generate_class(file_path)
+    get_latest_version_files
     File.open(file_path, 'w') do |f|
       f.puts 'module Highlighter'
       f.puts with_tabs 'module Utils', 1
@@ -64,7 +65,7 @@ class PrismGenerator
       if match_data
         [match_data[1].to_sym, t]
       else
-        [:main, t]
+        [:default, t]
       end
     end
     Hash[lookup]
