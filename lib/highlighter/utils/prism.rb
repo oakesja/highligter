@@ -41,6 +41,7 @@ module Highlighter
             cpp: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-cpp.min.js',
             crystal: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-crystal.min.js',
             csharp: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-csharp.min.js',
+            css_extras: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-css-extras.min.js',
             css: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-css.min.js',
             d: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-d.min.js',
             dart: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-dart.min.js',
@@ -95,6 +96,7 @@ module Highlighter
             parser: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-parser.min.js',
             pascal: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-pascal.min.js',
             perl: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-perl.min.js',
+            php_extras: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-php-extras.min.js',
             php: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-php.min.js',
             powershell: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-powershell.min.js',
             processing: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-processing.min.js',
@@ -129,6 +131,30 @@ module Highlighter
             vim: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-vim.min.js',
             wiki: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-wiki.min.js',
             yaml: 'https://cdn.jsdelivr.net/prism/1.3.0/components/prism-yaml.min.js',
+          }
+        end
+
+        def plugins
+          {
+            autolinker: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/autolinker/prism-autolinker.min.js',
+            autoloader: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/autoloader/prism-autoloader.min.js',
+            file_highlight: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/file-highlight/prism-file-highlight.min.js',
+            highlight_keywords: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/highlight-keywords/prism-highlight-keywords.min.js',
+            ie8: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/ie8/prism-ie8.min.js',
+            jsonp_highlight: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/jsonp-highlight/prism-jsonp-highlight.min.js',
+            keep_markup: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/keep-markup/prism-keep-markup.min.js',
+            line_highlight: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/line-highlight/prism-line-highlight.min.js',
+            line_numbers: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/line-numbers/prism-line-numbers.min.js',
+            previewer_angle: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/previewer-angle/prism-previewer-angle.min.js',
+            previewer_base: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/previewer-base/prism-previewer-base.min.js',
+            previewer_color: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/previewer-color/prism-previewer-color.min.js',
+            previewer_easing: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/previewer-easing/prism-previewer-easing.min.js',
+            previewer_gradient: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/previewer-gradient/prism-previewer-gradient.min.js',
+            previewer_time: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/previewer-time/prism-previewer-time.min.js',
+            remove_initial_line_feed: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/remove-initial-line-feed/prism-remove-initial-line-feed.min.js',
+            show_invisibles: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/show-invisibles/prism-show-invisibles.min.js',
+            show_language: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/show-language/prism-show-language.min.js',
+            wpd: 'https://cdn.jsdelivr.net/prism/1.3.0/plugins/wpd/prism-wpd.min.js',
           }
         end
       end

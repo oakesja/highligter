@@ -10,12 +10,13 @@ class AssetGenerator
   def initialize
     @files = get_latest_version_files
     @mainjs = asset_link('prism.js')
-    @theme_lookup = create_lookup_for(themes, 'themes\/prism-')
-    @language_lookup = create_lookup_for(components, 'components\/prism-')
+    @theme_lookup = create_lookup_for(themes, 'themes\/prism-', '\.')
+    @language_lookup = create_lookup_for(components, 'components\/prism-', '\.min')
+    @plugin_lookup = create_lookup_for(plugins, 'plugins\/', '\/')
   end
 
   def generate_prism_class(file_path)
-    PrismGenerator.new(@mainjs, @language_lookup, @theme_lookup).generate_prism_class(file_path)
+    PrismGenerator.new(@mainjs, @language_lookup, @theme_lookup, @plugin_lookup).generate_prism_class(file_path)
   end
 
   def generate_fixtures(fixture_dir, fixture_helper)
@@ -30,12 +31,12 @@ class AssetGenerator
     "#{ASSET_BASE_URI}/#{@latest_version}/#{asset}"
   end
 
-  def create_lookup_for(items, suffix)
+  def create_lookup_for(items, prefix, suffix)
     lookup = items.collect do |t|
-      match_data = t.match(/#{suffix}(\w*)/)
+      match_data = t.match(/#{prefix}(\S*)#{suffix}/)
       url = asset_link(t)
       if match_data
-        [match_data[1].to_sym, url]
+        [match_data[1].gsub('-', '_').to_sym, url]
       else
         [:default, url]
       end

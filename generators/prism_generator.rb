@@ -1,10 +1,11 @@
 class PrismGenerator
   TAB = '  '
 
-  def initialize(main_js, language_lookup, theme_lookup)
+  def initialize(main_js, language_lookup, theme_lookup, plugin_lookup)
     @main_js = main_js
     @language_lookup = language_lookup
     @theme_lookup = theme_lookup
+    @plugin_lookup = plugin_lookup
   end
 
   def generate_prism_class(file_path)
@@ -31,6 +32,8 @@ class PrismGenerator
     generate_hash_method(f, 'themes', @theme_lookup, starting_tab)
     f.puts
     generate_hash_method(f, 'languages', @language_lookup, starting_tab)
+    f.puts
+    generate_hash_method(f, 'plugins', @plugin_lookup, starting_tab)
   end
 
   def with_tabs(output, num_tabs)
