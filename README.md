@@ -1,5 +1,15 @@
 # Highlighter
 
+TODO
+- figure out how to handle languages https://github.com/github/linguist/blob/master/lib/linguist/languages.yml
+  - need specs for every language and alias of it
+  - avoid having fixture files for these
+- support plugin added to convert options
+- create generator for theme fixtures fixtures.rb
+- remote file loader
+- jsonp for remote github gists and others through api. maybe?
+
+
 http://prismjs.com/
 
 plugins

@@ -1,9 +1,13 @@
+require 'yaml'
+require 'net/http'
+
 class PrismGenerator
   TAB = '  '
+  GITHUB_LANGUAGES_URL = 'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml'
 
   def initialize(main_js, language_lookup, theme_lookup, plugin_lookup)
     @main_js = main_js
-    @language_lookup = language_lookup
+    @language_lookup = create_lang_lookup_with_aliases(language_lookup)
     @theme_lookup = theme_lookup
     @plugin_lookup = plugin_lookup
   end
@@ -24,6 +28,34 @@ class PrismGenerator
 
   private
 
+  def create_lang_lookup_with_aliases(language_lookup)
+    lookup = {}
+    language_lookup.each do |lang, url|
+      find_aliases_for(lang).each do |a|
+        lookup[a.to_sym] = url
+      end
+    end
+    lookup
+  end
+
+  def find_aliases_for(language)
+    lang = all_languages.find do |k, v|
+      aliases = [k, k.downcase, v['aliases']].flatten.compact
+      aliases.include?(language.to_s)
+    end
+    if lang
+      name = lang[0]
+      attrs = lang[1]
+      [name, name.downcase, attrs['aliases']].flatten.compact
+    else
+      []
+    end
+  end
+
+  def all_languages
+    @all_langs ||= YAML.load(Net::HTTP.get(URI(GITHUB_LANGUAGES_URL)))
+  end
+
   def generate_methods(f, starting_tab)
     f.puts with_tabs 'def prismjs', starting_tab
     f.puts with_tabs "'#{@main_js}'", starting_tab + 1
@@ -31,7 +63,7 @@ class PrismGenerator
     f.puts
     generate_hash_method(f, 'themes', @theme_lookup, starting_tab)
     f.puts
-    generate_hash_method(f, 'languages', @language_lookup, starting_tab)
+    generate_hash_method(f, 'languages', @language_lookup, starting_tab, string_keys: true)
     f.puts
     generate_hash_method(f, 'plugins', @plugin_lookup, starting_tab)
   end
@@ -40,11 +72,12 @@ class PrismGenerator
     TAB*num_tabs + output
   end
 
-  def generate_hash_method(f, name, hash_lookup, starting_tab)
+  def generate_hash_method(f, name, hash_lookup, starting_tab, string_keys: false)
     f.puts with_tabs "def #{name}", starting_tab
     f.puts with_tabs '{', starting_tab + 1
     hash_lookup.each do |k, v|
-      f.puts with_tabs "#{k}: '#{v}',", starting_tab + 2
+      key_value = string_keys ? "'#{k}' => '#{v}'," : "#{k}: '#{v}',"
+      f.puts with_tabs key_value, starting_tab + 2
     end
     f.puts with_tabs '}', starting_tab + 1
     f.puts with_tabs 'end', starting_tab

@@ -16,7 +16,8 @@ class AssetGenerator
   end
 
   def generate_prism_class(file_path)
-    PrismGenerator.new(@mainjs, @language_lookup, @theme_lookup, @plugin_lookup).generate_prism_class(file_path)
+    generator = PrismGenerator.new(@mainjs, @language_lookup, @theme_lookup, @plugin_lookup)
+    generator.generate_prism_class(file_path)
   end
 
   def generate_fixtures(fixture_dir, fixture_helper)
