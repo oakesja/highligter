@@ -46,7 +46,7 @@ module Highlighter
       def scripts
         main = script_tag(Highlighter::Utils::Prism.prismjs)
         langs = @languages.collect do |l|
-          script_tag(Highlighter::Utils::Prism.languages[l.to_sym])
+          script_tag(Highlighter::Utils::Prism.languages[l])
         end
         theme = style_link(Highlighter::Utils::Prism.themes[@theme])
         [main, langs, theme].join("\n") + "\n"

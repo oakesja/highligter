@@ -11,15 +11,22 @@ module Highlighter
 
       context 'for markdown with code blocks' do
         context 'and highlight code option is false' do
-          it 'it does add highlighting to code blocks' do
+          it 'it does not add highlighting to code blocks' do
             options.highlight_code = false
             verify_to_html(Fixtures::Markdown.code, Fixtures::Html.normal_code)
           end
         end
         context 'and highlight code option is true' do
+          context  'and no theme was selected' do
+            it 'it adds highlighting to code blocks with the default theme' do
+              options.highlight_code = true
+              expected_with_theme = 'highlighted_code_default'
+              verify_to_html(Fixtures::Markdown.code, Fixtures::Html.send(expected_with_theme.to_sym))
+            end
+          end
           Utils::Prism.themes.each_key do |theme|
-            context "and for the #{theme} theme" do
-              it 'it adds highlighting to code blocks' do
+            context "and the #{theme} theme was selected" do
+              it 'it adds highlighting to code blocks with the selected theme' do
                 options.highlight_code = true
                 options.theme = theme
                 expected_with_theme = "highlighted_code_#{theme.to_s}"

@@ -1,13 +1,20 @@
 module Highlighter
   module Utils
-    module DefaultAttributes
-      def accessor_with_default(name, default=nil)
-        ivar = "@#{name}"
-        define_method(name) do
-          instance_variable_defined?(ivar) ? instance_variable_get(ivar) : default
+    class DefaultAttributes
+      class << self
+        def attributes
+          @attributes ||= {}
         end
-        define_method("#{name}=") do |value|
-          instance_variable_set(ivar, value)
+
+        def accessor_with_default(name, default=nil)
+          send(:attr_accessor, name)
+          attributes[name.to_sym] = default
+        end
+      end
+
+      def initialize
+        self.class.attributes.each do |at, value|
+          send("#{at}=", value)
         end
       end
     end
