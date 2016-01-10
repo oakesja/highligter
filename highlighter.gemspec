@@ -1,11 +1,11 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'highlighter'
+# lib = File.expand_path('../lib', __FILE__)
+# $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+# require 'highlighter'
 
 Gem::Specification.new do |spec|
   spec.name          = 'highlighter'
-  spec.version       = Highlighter::VERSION
+  spec.version       = '0.1.0'
   spec.authors       = ['Jacob Oakes']
   spec.email         = ['jacoboakes92@gmail.com']
   spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
