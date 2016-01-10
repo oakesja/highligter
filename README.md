@@ -1,9 +1,9 @@
 # Highlighter
 
 TODO
-- support plugin added to convert options
 - rspec generator
 - create generator for theme fixtures fixtures.rb
+- support for other prism plugins (highlight lines, line numbers, show languages)
 - remote file loader
 - jsonp for remote github gists and others through api. maybe?
 
