@@ -45,4 +45,14 @@ class Fixtures
       fixture 'highlighted_code_twilight'
     end
   end
+
+  class Erb
+    class << self
+      extend Helpers
+      fixture_info 'erb', '.erb'
+
+      fixture 'code_html'
+      fixture 'code_markdown'
+    end
+  end
 end

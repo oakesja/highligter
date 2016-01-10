@@ -12,9 +12,10 @@ module Highlighter
       end
 
       def block_code(code, language)
+        lang_name = Highlighter::Utils::Prism.languages[language].name
         if @highlight_code
-          @languages << language
-          code_block_formatted(code, language)
+          @languages << lang_name
+          code_block_formatted(code, lang_name)
         else
           code_block_formatted(code)
         end
@@ -46,7 +47,7 @@ module Highlighter
       def scripts
         main = script_tag(Highlighter::Utils::Prism.prismjs)
         langs = @languages.collect do |l|
-          script_tag(Highlighter::Utils::Prism.languages[l])
+          script_tag(Highlighter::Utils::Prism.languages[l].js_url)
         end
         theme = style_link(Highlighter::Utils::Prism.themes[@theme])
         [main, langs, theme].join("\n") + "\n"

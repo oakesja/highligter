@@ -18,6 +18,8 @@ class PrismGenerator
       f.puts with_tabs 'module Utils', 1
       f.puts with_tabs 'class Prism', 2
       f.puts with_tabs 'class << self', 3
+      f.puts with_tabs 'Language = Struct.new(:name, :js_url)', 4
+      f.puts
       generate_methods(f, 4)
       f.puts with_tabs 'end', 3
       f.puts with_tabs 'end', 2
@@ -31,8 +33,10 @@ class PrismGenerator
   def create_lang_lookup_with_aliases(language_lookup)
     lookup = {}
     language_lookup.each do |lang, url|
-      find_aliases_for(lang).each do |a|
-        lookup[a.to_sym] = url
+      aliases = find_aliases_for(lang)
+      aliases.delete_if { |a| a.include?(' ')}
+      aliases.each do |a|
+        lookup[a.to_sym] = "Language.new('#{lang}', '#{url}')"
       end
     end
     lookup
@@ -63,7 +67,7 @@ class PrismGenerator
     f.puts
     generate_hash_method(f, 'themes', @theme_lookup, starting_tab)
     f.puts
-    generate_hash_method(f, 'languages', @language_lookup, starting_tab, string_keys: true)
+    generate_hash_method(f, 'languages', @language_lookup, starting_tab, string_keys: true, string_values: false)
     f.puts
     generate_hash_method(f, 'plugins', @plugin_lookup, starting_tab)
   end
@@ -72,11 +76,13 @@ class PrismGenerator
     TAB*num_tabs + output
   end
 
-  def generate_hash_method(f, name, hash_lookup, starting_tab, string_keys: false)
+  def generate_hash_method(f, name, hash_lookup, starting_tab, string_keys: false, string_values: true)
     f.puts with_tabs "def #{name}", starting_tab
     f.puts with_tabs '{', starting_tab + 1
     hash_lookup.each do |k, v|
-      key_value = string_keys ? "'#{k}' => '#{v}'," : "#{k}: '#{v}',"
+      key = string_keys ? "'#{k}' => " : "#{k}: "
+      value = string_values ? "'#{v}'," : "#{v},"
+      key_value = key + value
       f.puts with_tabs key_value, starting_tab + 2
     end
     f.puts with_tabs '}', starting_tab + 1

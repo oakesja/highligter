@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'highlighter/convert_options'
+require 'erb'
 
 module Highlighter
   describe Markdown do
@@ -32,6 +33,18 @@ module Highlighter
                 expected_with_theme = "highlighted_code_#{theme.to_s}"
                 verify_to_html(Fixtures::Markdown.code, Fixtures::Html.send(expected_with_theme.to_sym))
               end
+            end
+          end
+        end
+        Utils::Prism.languages.each_key do |language|
+          context "and code block is written in #{language} " do
+            it 'it adds highlighting to code blocks with the correct language syntax highlighting' do
+              options.highlight_code = true
+              language_highlight_src = Utils::Prism.languages[language].js_url # used in binding for erb
+              language_tag = Utils::Prism.languages[language].name # used in binding for erb
+              markdown = ERB.new(read_fixture(Fixtures::Erb.code_markdown)).result(binding)
+              html = ERB.new(read_fixture(Fixtures::Erb.code_html)).result(binding)
+              expect(Markdown.new(options).to_html(markdown)).to eql html
             end
           end
         end
