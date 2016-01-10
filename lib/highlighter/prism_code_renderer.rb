@@ -26,14 +26,15 @@ module Highlighter
       end
 
       def postprocess(full_document)
-        any_postprocessing? ? postprocess_document(full_document) : full_document
+        document = any_postprocessing? ? postprocess_document(full_document) : full_document
+        remove_final_new_line(document)
       end
 
       private
 
       def code_block_formatted(code, language=nil)
         clazz = language ? " class=\"language-#{language}\"" : ''
-        "<pre><code#{clazz}>\n#{code}</code></pre>"
+        "<pre><code#{clazz}>\n#{code}</code></pre>\n"
       end
 
       def any_postprocessing?
@@ -41,12 +42,12 @@ module Highlighter
       end
 
       def postprocess_document(full_document)
-        scripts + full_document
+        output = scripts + full_document
       end
 
       def scripts
         main = script_tag(Highlighter::Utils::Prism.prismjs)
-        langs = @languages.collect do |l|
+        langs = @languages.uniq.collect do |l|
           script_tag(Highlighter::Utils::Prism.languages[l].js_url)
         end
         theme = style_link(Highlighter::Utils::Prism.themes[@theme])
@@ -59,6 +60,10 @@ module Highlighter
 
       def style_link(url)
         "<link rel=\"stylesheet\" href=\"#{url}\">"
+      end
+
+      def remove_final_new_line(document)
+        document.chars.last == "\n" ? document.chop : document
       end
     end
   end

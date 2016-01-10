@@ -26,6 +26,8 @@ class Fixtures
 
       fixture 'simple'
       fixture 'code'
+      fixture 'multiple_code_different'
+      fixture 'multiple_code_same'
     end
   end
 
@@ -36,6 +38,8 @@ class Fixtures
 
       fixture 'simple'
       fixture 'normal_code'
+      fixture 'multiple_code_different'
+      fixture 'multiple_code_same'
       fixture 'highlighted_code_coy'
       fixture 'highlighted_code_dark'
       fixture 'highlighted_code_default'
