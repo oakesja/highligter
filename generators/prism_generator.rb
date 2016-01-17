@@ -1,8 +1,10 @@
 require 'yaml'
 require 'net/http'
+require_relative 'file_utils'
 
 class PrismGenerator
-  TAB = '  '
+  include FileUtils
+
   GITHUB_LANGUAGES_URL = 'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml'
 
   def initialize(prism_js_url, language_lookup, theme_lookup, plugin_lookup)
@@ -34,7 +36,7 @@ class PrismGenerator
     lookup = {}
     language_lookup.each do |lang, url|
       aliases = find_aliases_for(lang)
-      aliases.delete_if { |a| a.include?(' ')}
+      aliases.delete_if { |a| a.include?(' ') }
       aliases.each do |a|
         lookup[a.to_sym] = "Language.new('#{lang}', '#{url}')"
       end
@@ -70,10 +72,6 @@ class PrismGenerator
     generate_hash_method(f, 'languages', @language_lookup, starting_tab, string_keys: true, string_values: false)
     f.puts
     generate_hash_method(f, 'plugins', @plugin_lookup, starting_tab)
-  end
-
-  def with_tabs(output, num_tabs)
-    TAB*num_tabs + output
   end
 
   def generate_hash_method(f, name, hash_lookup, starting_tab, string_keys: false, string_values: true)

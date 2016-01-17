@@ -1,7 +1,8 @@
 require 'net/http'
 require 'oj'
 require_relative 'prism_generator'
-require_relative 'fixture_generator.rb'
+require_relative 'fixture_generator'
+require_relative 'fixture_helper_generator'
 
 class AssetGenerator
   JSDELIVER_API_ROUTE = 'https://api.jsdelivr.com/v1/jsdelivr/libraries?name=prism'
@@ -23,6 +24,7 @@ class AssetGenerator
   def generate_fixtures(fixture_dir, fixture_helper_path)
     generator = FixtureGenerator.new(@prism_js_url, @language_lookup, @theme_lookup)
     generator.generate_fixtures(fixture_dir)
+    FixtureHelperGenerator.generate(fixture_helper_path, fixture_dir)
   end
 
   private
