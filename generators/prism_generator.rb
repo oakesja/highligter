@@ -5,8 +5,8 @@ class PrismGenerator
   TAB = '  '
   GITHUB_LANGUAGES_URL = 'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml'
 
-  def initialize(main_js, language_lookup, theme_lookup, plugin_lookup)
-    @main_js = main_js
+  def initialize(prism_js_url, language_lookup, theme_lookup, plugin_lookup)
+    @prism_js_url = prism_js_url
     @language_lookup = create_lang_lookup_with_aliases(language_lookup)
     @theme_lookup = theme_lookup
     @plugin_lookup = plugin_lookup
@@ -62,7 +62,7 @@ class PrismGenerator
 
   def generate_methods(f, starting_tab)
     f.puts with_tabs 'def prismjs', starting_tab
-    f.puts with_tabs "'#{@main_js}'", starting_tab + 1
+    f.puts with_tabs "'#{@prism_js_url}'", starting_tab + 1
     f.puts with_tabs 'end', starting_tab
     f.puts
     generate_hash_method(f, 'themes', @theme_lookup, starting_tab)

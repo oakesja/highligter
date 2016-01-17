@@ -16,7 +16,7 @@ class HtmlTemplates
     end
 
     def simple
-      ['<h1>Header 1</h1>', '', '<p>test</p>', '']
+      ['<h1>Header 1</h1>', '', '<p>test</p>']
     end
   end
 end

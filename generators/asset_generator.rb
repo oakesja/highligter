@@ -9,21 +9,20 @@ class AssetGenerator
 
   def initialize
     @files = get_latest_version_files
-    @mainjs = asset_link('prism.js')
+    @prism_js_url = asset_link('prism.js')
     @theme_lookup = create_lookup_for(themes, 'themes\/prism-', '\.')
     @language_lookup = create_lookup_for(components, 'components\/prism-', '\.min')
     @plugin_lookup = create_lookup_for(plugins, 'plugins\/', '\/')
   end
 
   def generate_prism_class(file_path)
-    generator = PrismGenerator.new(@mainjs, @language_lookup, @theme_lookup, @plugin_lookup)
+    generator = PrismGenerator.new(@prism_js_url, @language_lookup, @theme_lookup, @plugin_lookup)
     generator.generate_prism_class(file_path)
   end
 
-  def generate_fixtures(fixture_dir, fixture_helper)
-    generator = FixtureGenerator.new(@mainjs, @language_lookup, @theme_lookup)
-    generator.generate_html(File.join(fixture_dir, 'html'))
-    generator.generate_markdown(File.join(fixture_dir, 'markdown'))
+  def generate_fixtures(fixture_dir, fixture_helper_path)
+    generator = FixtureGenerator.new(@prism_js_url, @language_lookup, @theme_lookup)
+    generator.generate_fixtures(fixture_dir)
   end
 
   private
@@ -32,9 +31,9 @@ class AssetGenerator
     "#{ASSET_BASE_URI}/#{@latest_version}/#{asset}"
   end
 
-  def create_lookup_for(items, prefix, suffix)
+  def create_lookup_for(items, filename_prefix, filename_suffix)
     lookup = items.collect do |t|
-      match_data = t.match(/#{prefix}(\S*)#{suffix}/)
+      match_data = t.match(/#{filename_prefix}(\S*)#{filename_suffix}/)
       url = asset_link(t)
       if match_data
         [match_data[1].gsub('-', '_').to_sym, url]
@@ -57,10 +56,8 @@ class AssetGenerator
     all_files_that_start_with('components')
   end
 
-  def all_files_that_start_with(suffix)
-    @files.find_all do |f|
-      f.start_with?(suffix)
-    end
+  def all_files_that_start_with(filename_suffix)
+    @files.find_all { |f| f.start_with?(filename_suffix) }
   end
 
   def get_latest_version_files
@@ -73,11 +70,3 @@ class AssetGenerator
     lastest_assets['files']
   end
 end
-
-base_dir = File.absolute_path('../../', __FILE__)
-class_path = File.join(base_dir, 'lib', 'highlighter', 'utils', 'prism.rb')
-fixture_path = File.join(base_dir, 'spec', 'fixtures')
-fixture_helper = File.join(base_dir, 'lib', 'helpers', 'fixture.rb')
-generator = AssetGenerator.new
-generator.generate_prism_class(class_path)
-generator.generate_fixtures(fixture_path, fixture_helper)

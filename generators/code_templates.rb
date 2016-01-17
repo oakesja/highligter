@@ -7,5 +7,9 @@ class CodeTemplates
        '  end',
        'end']
     end
+
+    def simple_sample
+      ['x = 1']
+    end
   end
 end
