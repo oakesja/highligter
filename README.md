@@ -1,22 +1,10 @@
 # Highlighter
 
 TODO
-- rspec generator
-- create generator for theme fixtures fixtures.rb
+- cli and tests for it
 - support for other prism plugins (highlight lines, line numbers, show languages)
 - remote file loader
 - jsonp for remote github gists and others through api. maybe?
-
-http://prismjs.com/
-
-plugins
-- line numbers
-- remote cards
-- large number of supported languages
-- reasonable number of themes
-
-- support both code blocks and spans
-- support language specifier for code spans
 
 
 ## Installation

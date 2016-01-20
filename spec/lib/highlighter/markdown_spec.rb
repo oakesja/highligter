@@ -1,25 +1,22 @@
 require 'spec_helper'
-require 'highlighter/convert_options'
+require 'highlighter/markdown'
 require 'erb'
 
 module Highlighter
   describe Markdown do
-    let(:options) { ConvertOptions.new }
     describe '::to_html' do
+      let(:options) { convert_options }
       it 'converts markdown input to html' do
         verify_to_html(Fixtures::Markdown.simple, Fixtures::Html.simple)
       end
       context 'for markdown with code blocks' do
         context 'and highlight code option is false' do
+          let(:options) { convert_options(highlight: false) }
           it 'it does not add highlighting to code blocks' do
-            options.highlight_code = false
             verify_to_html(Fixtures::Markdown.code, Fixtures::Html.normal_code)
           end
         end
         context 'and highlight code option is true' do
-          before(:each) do
-            options.highlight_code = true
-          end
           context 'and no theme was selected' do
             it 'it adds highlighting to code blocks with the default theme' do
               verify_to_html(Fixtures::Markdown.code, Fixtures::Html.highlighted_code_default)
@@ -27,8 +24,8 @@ module Highlighter
           end
           Utils::Prism.themes.each_key do |theme|
             context "and the #{theme} theme was selected" do
+              let(:options) { convert_options(theme: theme) }
               it 'it adds highlighting to code blocks with the selected theme' do
-                options.theme = theme
                 expected_fixture = "highlighted_code_#{theme.to_s}"
                 verify_to_html(Fixtures::Markdown.code, Fixtures::Html.send(expected_fixture.to_sym))
               end
@@ -45,7 +42,7 @@ module Highlighter
               end
             end
           end
-          context 'and there a multiple code blocks of the same language' do
+          context 'and there are multiple code blocks of the same language' do
             it 'will add the correct syntax highlighting only once' do
               verify_to_html(Fixtures::Markdown.multiple_code_same, Fixtures::Html.multiple_code_same)
             end
@@ -67,5 +64,7 @@ module Highlighter
     def read_fixture(path)
       File.read(path)
     end
+
+
   end
 end
