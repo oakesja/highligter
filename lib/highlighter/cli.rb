@@ -6,7 +6,7 @@ require 'highlighter/utils/prism'
 module Highlighter
   class Cli < Clamp::Command
 
-    option '--[no-]highlight', :flag, 'syntax highlight output or not', :default => true
+    option '--[no-]highlight', :flag, 'highlight output or not', :default => true
 
     option %w(-t --theme), 'THEME', 'theme to use when highlighting',
            :attribute_name => :theme, :default => :default do |t|
