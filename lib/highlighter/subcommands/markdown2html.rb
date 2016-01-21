@@ -8,7 +8,7 @@ module Highlighter
     class Markdown2Html < Clamp::Command
       option '--[no-]highlight', :flag, 'highlight output or not', :default => true
 
-      option %w(-t --theme), 'the theme to use when highlighting',
+      option %w(-t --theme), 'THEME', 'the THEME to use when highlighting',
              :attribute_name => :theme, :default => 'default' do |t|
         theme = t.strip.to_sym
         signal_usage_error "'#{t.strip}' is an invalid theme" unless Utils::Prism.themes[theme]
@@ -20,7 +20,7 @@ module Highlighter
         i
       end
 
-      parameter '<output.html>', 'where the outputted html file should be written', :attribute_name => :output do |o|
+      parameter '<output.html>', 'outputted html file', :attribute_name => :output do |o|
         dir = File.dirname(o)
         raise "The path '#{dir}' does not exist for <output.html>" unless File.directory?(dir)
         o
