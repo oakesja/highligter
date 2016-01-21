@@ -81,7 +81,7 @@ module Highlighter
       end
 
       def expect_run_with_options(args='', input_file, options)
-        expect(Converter).to receive(:convert).with(input_file, options)
+        expect(Converter).to receive(:markdown2html).with(input_file, options)
         subject.run(create_args_with_options(args))
       end
 

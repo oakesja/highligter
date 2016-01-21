@@ -27,7 +27,7 @@ module Highlighter
       end
 
       def execute
-        Converter.convert(input, options)
+        Converter.markdown2html(input, options)
       end
 
       private
