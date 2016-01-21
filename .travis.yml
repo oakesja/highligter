@@ -8,3 +8,5 @@ before_install: gem install bundler -v 1.11.2
 script:
  - bundle exec rspec
  - gem build highlighter.gemspec
+ - gem install highlighter*.gem
+ - highlighter --help
