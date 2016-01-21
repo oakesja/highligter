@@ -8,19 +8,19 @@ module Highlighter
     class Markdown2Html < Clamp::Command
       option '--[no-]highlight', :flag, 'highlight output or not', :default => true
 
-      option %w(-t --theme), 'THEME', 'theme to use when highlighting',
+      option %w(-t --theme), 'the theme to use when highlighting',
              :attribute_name => :theme, :default => 'default' do |t|
         theme = t.strip.to_sym
         signal_usage_error "'#{t.strip}' is an invalid theme" unless Utils::Prism.themes[theme]
         theme
       end
 
-      parameter '<input.md>', 'the path to the markdown file to convert', :attribute_name => :input do |i|
+      parameter '<input.md>', 'the markdown file to convert', :attribute_name => :input do |i|
         raise "'#{i}' does not exist for <input.md>" unless File.exist?(i)
         i
       end
 
-      parameter '<output.html>', 'the path to the outputted html file', :attribute_name => :output do |o|
+      parameter '<output.html>', 'where the outputted html file should be written', :attribute_name => :output do |o|
         dir = File.dirname(o)
         raise "The path '#{dir}' does not exist for <output.html>" unless File.directory?(dir)
         o

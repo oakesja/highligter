@@ -5,10 +5,10 @@ require 'highlighter/subcommands/list_languages'
 
 module Highlighter
   class Cli < Clamp::Command
-    subcommand %w(markdown2html m2h), 'Converts markdown to html with syntax highlighting for code blocks',
+    subcommand %w(markdown2html m2h), 'Converts markdown to html with syntax highlighting for code',
                Subcommands::Markdown2Html
 
     subcommand 'themes', 'Lists available themes', Subcommands::ListThemes
-    subcommand 'languages', 'Lists available languages with syntax highlighting', Subcommands::ListLanguages
+    subcommand 'languages', 'Lists available languages', Subcommands::ListLanguages
   end
 end
